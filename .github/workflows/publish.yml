@@ -13,14 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 25
 
       - name: Publish to MavenCentral
         run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
@@ -38,14 +36,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 25
 
       - name: Build macOS Targets
         run: |
@@ -71,14 +67,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 25
 
       - name: Install RPM
         run: sudo apt-get install -y rpm
@@ -133,14 +127,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 25
 
       - name: Build Windows Targets
         shell: bash
