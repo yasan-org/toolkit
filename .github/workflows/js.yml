@@ -19,8 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6
@@ -49,8 +47,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup Java
         uses: actions/setup-java@v6

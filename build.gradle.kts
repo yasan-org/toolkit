@@ -64,8 +64,8 @@ fun Project.configureDetekt() {
     detekt {
         buildUponDefaultConfig = true
         config.setFrom(
-            "$rootDir/detekt/detekt.yml",
-            "$rootDir/detekt/detekt-kepko.yml",
+            "$rootDir/config/detekt/detekt.yml",
+            "$rootDir/config/detekt/detekt-kepko.yml",
         )
         source.from(
             "src/androidMain/kotlin",
