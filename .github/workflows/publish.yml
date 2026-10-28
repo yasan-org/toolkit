@@ -1,7 +1,7 @@
 name: Publish
 on:
   release:
-    types: [released, prereleased]
+    types: [published]
 
 permissions:
   contents: write
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Java
         uses: actions/setup-java@v6
@@ -34,8 +36,8 @@ jobs:
 
       - name: Publish to GitHub Packages
         continue-on-error: true
-        timeout-minutes: 30
-        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository --no-configuration-cache
+        timeout-minutes: 45
+        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository --no-configuration-cache --parallel
         env:
           ORG_GRADLE_PROJECT_GitHubPackagesUsername: ${{ github.actor }}
           ORG_GRADLE_PROJECT_GitHubPackagesPassword: ${{ secrets.GITHUB_TOKEN }}
@@ -50,6 +52,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Java
         uses: actions/setup-java@v6
@@ -81,6 +85,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Java
         uses: actions/setup-java@v6
@@ -141,6 +147,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Java
         uses: actions/setup-java@v6
