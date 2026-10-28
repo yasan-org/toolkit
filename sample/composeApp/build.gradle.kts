@@ -115,6 +115,8 @@ compose.desktop {
             )
             packageName = "Toolkit"
             packageVersion = "1.0.0"
+            description = "Explore the Toolkit libraries for Kotlin Multiplatform"
+            licenseFile.set(rootProject.file("LICENSE"))
             macOS {
                 iconFile.set(project.file("src/jvmMain/resources/app_icon.icns"))
                 bundleID = "glass.yasan.toolkit.sample"
@@ -125,6 +127,10 @@ compose.desktop {
             }
             linux {
                 iconFile.set(project.file("src/jvmMain/resources/app_icon.png"))
+                debMaintainer = "yasanglass@gmail.com"
+                appCategory = "Development"
+                rpmLicenseType = "Apache-2.0"
+                menuGroup = "Development"
             }
         }
     }
