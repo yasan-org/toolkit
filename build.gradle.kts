@@ -1,5 +1,8 @@
 import dev.detekt.gradle.Detekt
 import org.gradle.plugins.signing.Sign
+import java.net.HttpURLConnection
+import java.net.URI
+import java.util.Base64
 
 plugins {
     alias(libs.plugins.jetbrains.kotlin.compose) apply false
@@ -114,6 +117,41 @@ fun Project.configurePublishing() {
                 url.set("https://github.com/yasanglass/toolkit/")
                 connection.set("scm:git:git://github.com/yasanglass/toolkit.git")
                 developerConnection.set("scm:git:ssh://git@github.com/yasanglass/toolkit.git")
+            }
+        }
+    }
+
+    configure<PublishingExtension> {
+        repositories.maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/yasan-org/toolkit")
+            credentials(PasswordCredentials::class)
+        }
+    }
+
+    // GitHub Packages rejects re-uploading a version, so re-runs skip publications already there.
+    val gitHubPackagesUsername = providers.gradleProperty("GitHubPackagesUsername")
+    val gitHubPackagesPassword = providers.gradleProperty("GitHubPackagesPassword")
+    tasks.withType<PublishToMavenRepository>().configureEach {
+        if (name.endsWith("ToGitHubPackagesRepository")) {
+            onlyIf("publication is not on GitHub Packages yet") { task ->
+                task as PublishToMavenRepository
+                val publication = task.publication
+                val pomUrl = "${task.repository.url.toString().trimEnd('/')}/" +
+                    "${publication.groupId.replace('.', '/')}/${publication.artifactId}/${publication.version}/" +
+                    "${publication.artifactId}-${publication.version}.pom"
+                val auth = "${gitHubPackagesUsername.orNull}:${gitHubPackagesPassword.orNull}"
+                val connection = URI(pomUrl).toURL().openConnection() as HttpURLConnection
+                connection.setRequestProperty(
+                    "Authorization",
+                    "Basic ${Base64.getEncoder().encodeToString(auth.toByteArray())}",
+                )
+                val published = runCatching { connection.responseCode == 200 }.getOrDefault(false)
+                connection.disconnect()
+                if (published) {
+                    task.logger.lifecycle("${publication.artifactId}:${publication.version} is already on GitHub Packages")
+                }
+                !published
             }
         }
     }
