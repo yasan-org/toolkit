@@ -35,6 +35,7 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+    macosArm64()
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -63,6 +64,9 @@ kotlin {
             dependsOn(nonAndroidMain)
         }
         iosMain {
+            dependsOn(nonAndroidMain)
+        }
+        macosMain {
             dependsOn(nonAndroidMain)
         }
         jsMain {
