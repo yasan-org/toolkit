@@ -40,20 +40,28 @@
       "transformTemplates": [
         "{\"releases\": [$distinct(releases.$match(version, /path=\"platforms;android-(\\d+)(\\.\\d+)?\"/).groups[0]).{\"version\": $}]}"
       ]
+    },
+    "android-platforms-minor": {
+      "description": "Reads the full Android API levels (major.minor, such as 37.1) from Google's Android SDK repository manifest, skipping beta and extension builds",
+      "defaultRegistryUrlTemplate": "https://dl.google.com/android/repository/repository2-3.xml",
+      "format": "plain",
+      "transformTemplates": [
+        "{\"releases\": [$distinct(releases.$match(version, /path=\"platforms;android-(\\d+\\.\\d+)\"/).groups[0]).{\"version\": $}]}"
+      ]
     }
   },
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Track the Android compile SDK in the version catalog",
+      "description": "Track the Android compile SDK in the version catalog, as major.minor so minor platform releases (such as 37.1) are proposed too",
       "managerFilePatterns": [
         "/(^|/)gradle/libs\\.versions\\.toml$/"
       ],
       "matchStrings": [
-        "android-sdk-compile = \"(?<currentValue>\\d+)\""
+        "android-sdk-compile = \"(?<currentValue>\\d+\\.\\d+)\""
       ],
       "depNameTemplate": "android-compile-sdk",
-      "datasourceTemplate": "custom.android-platforms",
+      "datasourceTemplate": "custom.android-platforms-minor",
       "versioningTemplate": "loose"
     },
     {
