@@ -6,7 +6,10 @@ plugins {
 
 android {
     namespace = "glass.yasan.toolkit.sample"
-    compileSdk = libs.versions.sample.android.sdk.compile.get().toInt()
+    compileSdk {
+        val (major, minor) = libs.versions.sample.android.sdk.compile.get().split('.').map(String::toInt)
+        version = release(major) { minorApiLevel = minor }
+    }
 
     sourceSets["main"].kotlin.srcDir("src/main/kotlin")
 
