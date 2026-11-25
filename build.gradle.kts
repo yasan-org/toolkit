@@ -95,7 +95,7 @@ fun Project.configurePublishing() {
             name.set("Toolkit")
             description.set("Personal development toolkit for Kotlin Multiplatform")
             inceptionYear.set("2025")
-            url.set("https://github.com/yasanglass/toolkit/")
+            url.set("https://github.com/yasan-org/toolkit/")
             licenses {
                 license {
                     name.set("The Apache License, Version 2.0")
@@ -111,9 +111,9 @@ fun Project.configurePublishing() {
                 }
             }
             scm {
-                url.set("https://github.com/yasanglass/toolkit/")
-                connection.set("scm:git:git://github.com/yasanglass/toolkit.git")
-                developerConnection.set("scm:git:ssh://git@github.com/yasanglass/toolkit.git")
+                url.set("https://github.com/yasan-org/toolkit/")
+                connection.set("scm:git:git://github.com/yasan-org/toolkit.git")
+                developerConnection.set("scm:git:ssh://git@github.com/yasan-org/toolkit.git")
             }
         }
     }
